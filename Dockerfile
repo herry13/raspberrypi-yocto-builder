@@ -17,13 +17,11 @@ RUN git clone -b morty git://git.yoctoproject.org/poky.git poky-morty && \
     cd poky-morty && \
     git clone -b morty git://git.openembedded.org/meta-openembedded --depth=1 && \
     git clone -b morty git://git.yoctoproject.org/meta-raspberrypi --depth=1 && \
+    git clone -b morty https://github.com/meta-qt5/meta-qt5.git --depth=1 && \
     cd /root && \
     mkdir rpi && \
     cd rpi && \
     git clone -b morty git://github.com/jumpnow/meta-rpi --depth=1
-
-RUN cd poky-morty && \
-    git clone -b morty https://github.com/meta-qt5/meta-qt5.git --depth=1
 
 COPY build.sh /root/build.sh
 

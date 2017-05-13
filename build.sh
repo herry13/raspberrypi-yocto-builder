@@ -1,22 +1,24 @@
 #!/bin/bash
 
-TARGET=/mnt/build
+TARGET=/mnt
+BUILD=/root/rpi/build
 
-mkdir -p $TARGET/conf
-source /root/poky-morty/oe-init-build-env $TARGET
+mkdir -p $BUILD/conf
+source /root/poky-morty/oe-init-build-env $BUILD
 
-if [ -f /mnt/local.conf ]; then
-  cp -f /mnt/local.conf $TARGET/conf/local.conf
+if [ -f $TARGET/local.conf ]; then
+  cp -f $TARGET/local.conf $BUILD/conf/local.conf
 else
-  cp -f /root/rpi/meta-rpi/conf/local.conf.sample $TARGET/conf/local.conf
+  cp -f /root/rpi/meta-rpi/conf/local.conf.sample $BUILD/conf/local.conf
 fi
 
-if [ -f /mnt/bblayers.conf ]; then
-  cp -f /mnt/bblayers.conf $TARGET/conf/bblayers.conf
+if [ -f $TARGET/bblayers.conf ]; then
+  cp -f $TARGET/bblayers.conf $BUILD/conf/bblayers.conf
 else
-  cp -f /root/rpi/meta-rpi/conf/bblayers.conf.sample $TARGET/conf/bblayers.conf
+  cp -f /root/rpi/meta-rpi/conf/bblayers.conf.sample $BUILD/conf/bblayers.conf
 fi
 
-touch $TARGET/conf/sanity.conf
-cd $TARGET
+touch $BUILD/conf/sanity.conf
+cd $BUILD
 bitbake console-image
+cp -r $BUILD/tmp/deploy/images/* $TARGET/
